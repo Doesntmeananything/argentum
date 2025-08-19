@@ -1,4 +1,4 @@
-import { bold, fmt, italic, type FmtString } from "telegraf/format";
+import { bold, fmt, italic, join, type FmtString } from "telegraf/format";
 
 import { poems } from "../data/poems.json";
 
@@ -25,14 +25,15 @@ export const getDailyPoem = async (): Promise<DailyPoem | undefined> => {
 
     const availablePoems = poems.filter((poem) => !meta.lastSeenPoemIds.includes(poem.id));
 
-    console.log(availablePoems);
-
     // Reset history if there are no fresh poems
     if (availablePoems.length === 0) {
-        await resetMeta();
+        meta = await resetMeta();
         const dailyPoem = poems.find((poem) => poem.id === DEFAULT_POEM_ID);
 
         if (!dailyPoem) return;
+
+        meta.lastSeenPoemIds.push(dailyPoem.id);
+        await saveMeta(meta);
 
         return {
             id: dailyPoem.id,

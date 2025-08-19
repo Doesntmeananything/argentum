@@ -4,7 +4,7 @@ interface Meta {
     lastSeenPoemIds: string[];
 }
 
-export const DEFAULT_META: Meta = {
+const DEFAULT_META: Readonly<Meta> = {
     lastSeenPoemIds: [],
 };
 
@@ -21,6 +21,18 @@ export const loadMeta = async (): Promise<Meta> => {
     }
 };
 
-export const saveMeta = (meta: Meta) => Bun.write(META_FILE_PATH, JSON.stringify(meta, null, 4));
+export const saveMeta = async (meta: Meta) => {
+    await Bun.write(META_FILE_PATH, JSON.stringify(meta, null, 4));
 
-export const resetMeta = () => Bun.write(META_FILE_PATH, JSON.stringify(DEFAULT_META, null, 4));
+    return meta;
+};
+
+export const resetMeta = async () => {
+    const defaultMeta: Meta = {
+        lastSeenPoemIds: [],
+    };
+
+    await Bun.write(META_FILE_PATH, JSON.stringify(defaultMeta, null, 4));
+
+    return defaultMeta;
+};

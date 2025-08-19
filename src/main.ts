@@ -1,4 +1,3 @@
-import dedent from "dedent";
 import cron from "node-cron";
 import { Telegraf } from "telegraf";
 
@@ -23,11 +22,9 @@ bot.command("poem", async (ctx) => {
     }
 
     await ctx.reply(poem.formatted);
-    console.log(dedent`Daily poem sent.
-            id: ${poem.id}
-            author: ${poem.author}
-            title: ${poem.title}
-            `);
+    console.log(
+        `Daily poem sent with id: ${poem.id}, author: ${poem.author}, title: ${poem.title}`
+    );
 });
 
 cron.schedule(
@@ -41,11 +38,9 @@ cron.schedule(
         }
 
         await bot.telegram.sendMessage(GROUP_ID, poem.formatted);
-        console.log(dedent`Daily poem sent at 9 AM Moscow time.
-            id: ${poem.id}
-            author: ${poem.author}
-            title: ${poem.title}
-            `);
+        console.log(
+            `Daily poem sent at 9 AM Moscow time with id: ${poem.id}, author: ${poem.author}, title: ${poem.title}`
+        );
     },
     { timezone: "Europe/Moscow" }
 );
