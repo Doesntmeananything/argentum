@@ -1,0 +1,47 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Poems Collection",
+    "type": "object",
+    "properties": {
+        "poems": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "author": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            }
+                        },
+                        "required": ["id", "name"]
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                    "dedicatedTo": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "text": {
+                        "type": "string"
+                    }
+                },
+                "required": ["id", "author", "title", "text"]
+            }
+        }
+    },
+    "required": ["poems"]
+}
