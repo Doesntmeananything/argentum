@@ -1,7 +1,7 @@
 import cron from "node-cron";
 import { Telegraf } from "telegraf";
 
-import { getDailyPoem } from "./poems";
+import { getDailyPoem, getRandomPoem } from "./poems";
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const GROUP_ID = process.env.GROUP_ID;
@@ -13,16 +13,16 @@ const bot = new Telegraf(BOT_TOKEN);
 
 // Command to test poems manually
 bot.command("poem", async (ctx) => {
-    const poem = await getDailyPoem();
+    const poem = getRandomPoem();
 
     if (!poem) {
-        await ctx.reply("No poem available!");
-        console.log("Could not find a daily poem to send.");
+        await ctx.reply("No poems available!");
+        console.log("Could not find a random poem to send.");
         return;
     }
 
     await ctx.reply(poem.formatted);
-    console.log(`Daily poem sent with id: ${poem.id}, author: ${poem.author}, title: ${poem.title}`);
+    console.log(`Random poem sent with id: ${poem.id}, author: ${poem.author}, title: ${poem.title}`);
 });
 
 cron.schedule(
@@ -41,7 +41,7 @@ cron.schedule(
     { timezone: "Europe/Moscow" },
 );
 
-await bot.telegram.setMyCommands([{ command: "poem", description: "Get a daily poem" }]);
+await bot.telegram.setMyCommands([{ command: "poem", description: "Get a random poem" }]);
 
 bot.launch();
 console.log("🚀 Bot started!");

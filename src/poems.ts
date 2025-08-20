@@ -60,6 +60,19 @@ export const getDailyPoem = async (): Promise<DailyPoem | undefined> => {
     };
 };
 
+export const getRandomPoem = (): DailyPoem | undefined => {
+    const randomPoem = poems.at(Math.floor(Math.random() * poems.length));
+
+    if (!randomPoem) return;
+
+    return {
+        id: randomPoem.id,
+        author: randomPoem.author.name,
+        title: randomPoem.title,
+        formatted: formatPoem(randomPoem),
+    };
+};
+
 const formatPoem = (poem: JsonPoem) => {
     if (poem.dedicatedTo) {
         return fmt`

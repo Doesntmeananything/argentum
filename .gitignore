@@ -35,3 +35,6 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
 # Persisted app metadata
 data/meta.json
+
+# Scratchpad
+scratch.txt
