@@ -1,4 +1,4 @@
-import { bold, fmt, italic, join, type FmtString } from "telegraf/format";
+import { bold, fmt, italic, type FmtString } from "telegraf/format";
 
 import { poems } from "../data/poems.json";
 
@@ -15,10 +15,6 @@ interface DailyPoem {
 }
 
 const MAX_POEM_HISTORY = 30;
-/**
- * A special id that is always guaranteed to be present in the poem data set.
- */
-const DEFAULT_POEM_ID = "1";
 
 export const getDailyPoem = async (): Promise<DailyPoem | undefined> => {
     let meta = await loadMeta();
@@ -28,18 +24,21 @@ export const getDailyPoem = async (): Promise<DailyPoem | undefined> => {
     // Reset history if there are no fresh poems
     if (availablePoems.length === 0) {
         meta = await resetMeta();
-        const dailyPoem = poems.find((poem) => poem.id === DEFAULT_POEM_ID);
 
-        if (!dailyPoem) return;
+        // This first poem is guaranteed to exist by the dataset,
+        // and it is safe to start a new cycle with it
+        const firstPoem = poems.at(0);
 
-        meta.lastSeenPoemIds.push(dailyPoem.id);
+        if (!firstPoem) return;
+
+        meta.lastSeenPoemIds.push(firstPoem.id);
         await saveMeta(meta);
 
         return {
-            id: dailyPoem.id,
-            author: dailyPoem.author.name,
-            title: dailyPoem.title,
-            formatted: formatPoem(dailyPoem),
+            id: firstPoem.id,
+            author: firstPoem.author.name,
+            title: firstPoem.title,
+            formatted: formatPoem(firstPoem),
         };
     }
 

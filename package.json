@@ -8,7 +8,8 @@
         "generate:json-schema-to-typescript": "npx json2ts data/poem-schema.json src/poem.d.ts"
     },
     "devDependencies": {
-        "@types/bun": "^1.2.20"
+        "@types/bun": "^1.2.20",
+        "oxlint": "^1.12.0"
     },
     "peerDependencies": {
         "typescript": "^5"

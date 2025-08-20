@@ -17,6 +17,7 @@ export const loadMeta = async (): Promise<Meta> => {
 
         return file.json();
     } catch (error) {
+        console.error(error);
         return DEFAULT_META;
     }
 };
