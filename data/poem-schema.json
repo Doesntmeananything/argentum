@@ -23,20 +23,20 @@
                         },
                         "required": ["id", "name"]
                     },
-                    "date": {
-                        "type": "string"
-                    },
-                    "location": {
+                    "title": {
                         "type": "string"
                     },
                     "dedicatedTo": {
                         "type": "string"
                     },
-                    "title": {
-                        "type": "string"
-                    },
                     "text": {
                         "type": "string"
+                    },
+                    "footer": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     }
                 },
                 "required": ["id", "author", "title", "text"]

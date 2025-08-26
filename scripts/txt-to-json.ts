@@ -1,7 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
+import { type UUID, randomUUID } from "node:crypto";
 import { resolve } from "path";
-import { randomUUID } from "crypto";
-import type { UUID } from "node:crypto";
 
 import type { PoemsCollection } from "../src/poem";
 

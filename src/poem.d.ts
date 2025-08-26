@@ -13,11 +13,10 @@ export interface PoemsCollection {
       name: string;
       [k: string]: unknown;
     };
-    date?: string;
-    location?: string;
-    dedicatedTo?: string;
     title: string;
+    dedicatedTo?: string;
     text: string;
+    footer?: string[];
     [k: string]: unknown;
   }[];
   [k: string]: unknown;
