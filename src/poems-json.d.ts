@@ -6,18 +6,16 @@
  */
 
 export interface PoemsCollection {
+  $schema?: string;
   poems: {
     id: string;
     author: {
       id: string;
       name: string;
-      [k: string]: unknown;
     };
     title: string;
-    dedicatedTo?: string;
+    epigraph?: string[];
     text: string;
     footer?: string[];
-    [k: string]: unknown;
   }[];
-  [k: string]: unknown;
 }

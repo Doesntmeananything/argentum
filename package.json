@@ -5,7 +5,7 @@
     "private": true,
     "scripts": {
         "dev": "bun --watch src/main.ts",
-        "generate:json-schema-to-typescript": "npx json2ts data/poem-schema.json src/poem.d.ts"
+        "generate:json-schema-to-typescript": "npx json2ts data/poems-schema.json src/poems-json.d.ts"
     },
     "devDependencies": {
         "@types/bun": "^1.2.20",

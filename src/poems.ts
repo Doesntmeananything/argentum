@@ -2,7 +2,7 @@ import { bold, fmt, italic, type FmtString } from "telegraf/format";
 
 import { poems } from "../data/poems.json";
 
-import type { PoemsCollection } from "./poem";
+import type { PoemsCollection } from "./poems-json";
 import { loadMeta, resetMeta, saveMeta } from "./meta";
 
 type JsonPoem = PoemsCollection["poems"][number];
@@ -15,15 +15,16 @@ interface DailyPoem {
 }
 
 const formatPoem = (poem: JsonPoem) => {
+    const epigraph = poem.epigraph?.join("\n");
     const footer = poem.footer?.join("\n") ?? "";
 
-    if (poem.dedicatedTo) {
+    if (epigraph) {
         return fmt`
 ${bold`${poem.author.name}`}
 
 ${bold`${poem.title}`}
 
-${italic`${poem.dedicatedTo}`}
+${italic`${epigraph}`}
 
 ${poem.text}
 
