@@ -14,35 +14,6 @@ interface DailyPoem {
     formatted: FmtString<"fmt">;
 }
 
-const formatPoem = (poem: JsonPoem) => {
-    const epigraph = poem.epigraph?.join("\n");
-    const footer = poem.footer?.join("\n") ?? "";
-
-    if (epigraph) {
-        return fmt`
-${bold`${poem.author.name}`}
-
-${bold`${poem.title}`}
-
-${italic`${epigraph}`}
-
-${poem.text}
-
-${italic`${footer}`}
-`;
-    }
-
-    return fmt`
-${bold`${poem.author.name}`}
-
-${bold`${poem.title}`}
-
-${poem.text}
-
-${italic`${footer}`}
-`;
-};
-
 // A window of unique poems, which allows duplicates only outside of this number
 const MAX_POEM_HISTORY = 180;
 
@@ -101,4 +72,33 @@ export const getRandomPoem = (): DailyPoem | undefined => {
         title: randomPoem.title,
         formatted: formatPoem(randomPoem),
     };
+};
+
+const formatPoem = (poem: JsonPoem) => {
+    const epigraph = poem.epigraph?.join("\n");
+    const footer = poem.footer?.join("\n") ?? "";
+
+    if (epigraph) {
+        return fmt`
+${bold`${poem.author.name}`}
+
+${bold`${poem.title}`}
+
+${italic`${epigraph}`}
+
+${poem.text}
+
+${italic`${footer}`}
+`;
+    }
+
+    return fmt`
+${bold`${poem.author.name}`}
+
+${bold`${poem.title}`}
+
+${poem.text}
+
+${italic`${footer}`}
+`;
 };
