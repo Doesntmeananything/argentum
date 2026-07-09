@@ -11,6 +11,21 @@ if (!GROUP_ID) throw new Error('"GROUP_ID" env var is required!');
 
 const bot = new Telegraf(BOT_TOKEN);
 
+// Command to manually trigger a daily poem (fallback if cron fails)
+bot.command("daily", async (ctx) => {
+    const poem = await getDailyPoem();
+
+    if (!poem) {
+        await ctx.reply("No poems available!");
+        console.log("Could not find a daily poem to send.");
+        return;
+    }
+
+    await bot.telegram.sendMessage(GROUP_ID, poem.formatted);
+    await ctx.reply(poem.formatted);
+    console.log(`Daily poem sent via /daily with id: ${poem.id}, author: ${poem.author}, title: ${poem.title}`);
+});
+
 // Command to test poems manually
 bot.command("poem", async (ctx) => {
     const poem = getRandomPoem();
@@ -36,12 +51,15 @@ cron.schedule(
         }
 
         await bot.telegram.sendMessage(GROUP_ID, poem.formatted);
-        console.log(`Daily poem sent at 9 AM Moscow time with id: ${poem.id}, author: ${poem.author}, title: ${poem.title}`);
+        console.log(`Daily poem sent at ${new Date().toUTCString()} with id: ${poem.id}, author: ${poem.author}, title: ${poem.title}`);
     },
     { timezone: "Europe/Moscow" },
 );
 
-await bot.telegram.setMyCommands([{ command: "poem", description: "Get a random poem" }]);
+await bot.telegram.setMyCommands([
+    { command: "daily", description: "Force send today's daily poem to the group" },
+    { command: "poem", description: "Get a random poem" },
+]);
 
 bot.launch();
 console.log("🚀 Bot started!");
