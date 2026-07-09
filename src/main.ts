@@ -41,7 +41,8 @@ bot.command("poem", async (ctx) => {
 });
 
 cron.schedule(
-    "0 9 * * *", // 9 AM
+    // 9 AM
+    "0 9 * * *",
     async () => {
         const poem = await getDailyPoem();
 
