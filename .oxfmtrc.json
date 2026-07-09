@@ -1,0 +1,12 @@
+{
+    "tabWidth": 4,
+    "printWidth": 140,
+    "singleQuote": false,
+    "semi": true,
+    "trailingComma": "all",
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "bracketSameLine": false,
+    "useTabs": false,
+    "ignorePatterns": ["src/poems-json.d.ts"]
+}
